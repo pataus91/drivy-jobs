@@ -10,6 +10,14 @@ class Repository
     @database = load_json
   end
 
+  def self.find(id, item_name)
+    all(item_name).find { |item| item.id == id }
+  end
+
+  def all(item_name)
+    @database[item_name].map { |item| Object.const_get(item_name.capitalize).new(item)}
+  end
+
   def cars_all
     @database['cars'].map { |car| Car.new(car) }
   end
@@ -47,6 +55,3 @@ class Repository
     end
   end
 end
-
-# repository = Repository.new('../data/input.json')
-# p repository.find_option(1)

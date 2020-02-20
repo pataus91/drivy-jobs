@@ -1,7 +1,7 @@
 require 'date'
 require_relative 'commission'
 require_relative 'option'
-require_relative 'price'
+require_relative '../services/price'
 
 class Rental
   attr_reader :id, :car, :start_date, :end_date, :distance, :car_id, :repository

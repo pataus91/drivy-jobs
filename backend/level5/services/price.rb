@@ -1,4 +1,4 @@
-require_relative 'option'
+require_relative '../models/option'
 
 class Price
   def initialize(rental)
@@ -19,6 +19,8 @@ class Price
     { id: @rental.id, options: options_type, actions: [driver, owner, commissions[0], \
       commissions[1], commissions[2]] }
   end
+
+  private
 
   def discount(days, price_per_day)
     count = 1
@@ -51,9 +53,7 @@ class Price
   end
 
   def driver(price, option_fee)
-    option_fee.each do |option|
-      price += option[1]
-    end
+    option_fee.map { |option| price += option[1] }
 
     { who: 'driver', type: 'debit', amount: price }
   end
@@ -72,9 +72,9 @@ class Price
 
   def find_option_type(options)
     option_types = []
-    options.each do |option|
-      option_types << option.type
-    end
+
+    options.map { |option| option_types << option.type }
+
     option_types
   end
 
@@ -102,4 +102,3 @@ class Price
     options_details
   end
 end
-
